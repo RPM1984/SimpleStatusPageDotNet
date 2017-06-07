@@ -1,0 +1,25 @@
+﻿{
+  "appName": "Google",
+  "appLogoUrl": "http://www.underconsideration.com/brandnew/archives/google_2015_logo_detail.png",
+  "sites": [
+    {
+      "name": "Public site",
+      "baseAddress": "https://www.google.com.au"
+    }
+  ],
+  "apis": [
+    {
+      "name": "API",
+      "baseAddress": "https://api.google.com",
+      "healthEndpoint": "health",
+      "avgResponseTimeThreshold": 500
+    }
+  ],
+  "dbs": [
+    {
+      "name": "MyDb",
+      "connectionString":
+        "YOURDBCONNECTIONSTRING"
+    }
+  ]
+}

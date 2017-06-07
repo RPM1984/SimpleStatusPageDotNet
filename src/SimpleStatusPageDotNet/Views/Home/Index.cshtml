@@ -1,0 +1,94 @@
+﻿@model SimpleStatusPageDotNet.Models.StatusPageModel
+
+@{
+    ViewData["Title"] = $"{Model.AppName} - Status";
+}
+
+<div id="main">
+    <img alt="logo" class="logo" src="@Model.AppLogoUrl"/>
+    <br/>
+    <strong class="overall @Model.OverallStatusCssClass">@Model.OverallStatus</strong>
+    <br/>
+    <h2>Sites</h2>
+    <table>
+        <tr>
+            <th>Status</th>
+            <th>Name</th>
+            <th>URL</th>
+        </tr>
+        @foreach (var site in Model.Sites)
+        {
+            <tr>
+                <td class="status"><img class="status @site.CssClass" /></td>
+                <td><span>@site.Name</span></td>
+                <td><a href="@site.Url">@site.Url</a></td>
+            </tr>
+        }
+    </table>
+    
+    <h2>APIs</h2>
+    <table>
+        <tr>
+            <th>Status</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Avg Response Time</th>
+        </tr>
+        @foreach (var site in Model.Apis)
+        {
+            <tr>
+                <td class="status"><img class="status @site.CssClass" /></td>
+                <td><span>@site.Name</span></td>
+                <td><a href="@site.Url">@site.Url</a></td>
+                <td><span>@(site.AvgResponseTime)ms</span></td>
+            </tr>
+        }
+    </table>
+    
+    <h2>KPIs</h2>
+    <table>
+        <tr>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Last Activity On</th>
+        </tr>
+        @foreach (var site in Model.KPIs)
+        {
+            <tr>
+                <td class="status"><img class="status @site.CssClass" /></td>
+                <td><span>@site.Name</span></td>
+                <td><span>@site.LastActivityOn</span></td>
+            </tr>
+        }
+    </table>
+    
+    <h2>3rd Party Services</h2>
+    <table>
+        <tr>
+            <th>Status</th>
+            <th>Name</th>
+        </tr>
+        @foreach (var site in Model.ThirdPartyServices)
+        {
+            <tr>
+                <td class="status"><img class="status @site.CssClass" /></td>
+                <td><span>@site.Name</span></td>
+            </tr>
+        }
+    </table>
+    
+    <h2>Databases</h2>
+    <table>
+        <tr>
+            <th>Status</th>
+            <th>Name</th>
+        </tr>
+        @foreach (var db in Model.DBs)
+        {
+            <tr>
+                <td class="status"><img class="status @db.CssClass" /></td>
+                <td><span>@db.Name</span></td>
+            </tr>
+        }
+    </table>
+</div>
