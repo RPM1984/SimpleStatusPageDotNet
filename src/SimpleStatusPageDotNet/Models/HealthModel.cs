@@ -9,9 +9,9 @@
 
     public static class HealthModelExtensions
     {
-        public static bool IsHealthy(this HealthModel healthModel)
+        public static bool IsUnhealthy(this HealthModel healthModel)
         {
-            return healthModel.Status == HealthStatus.Healthy;
+            return healthModel.Status == HealthStatus.Unhealthy;
         }
     }
 }

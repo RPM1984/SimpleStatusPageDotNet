@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -70,6 +71,10 @@ namespace SimpleStatusPageDotNet.Controllers
                 model.Apis.Last().AvgResponseTime = 10000;
                 model.Apis.Last().Status = HealthStatus.Struggling;
             }
+
+            Response.StatusCode = model.IsOkOverall
+                                      ? (int) HttpStatusCode.OK
+                                      : (int) HttpStatusCode.ServiceUnavailable;
 
             return View(model);
         }

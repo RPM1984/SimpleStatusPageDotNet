@@ -8,11 +8,11 @@ namespace SimpleStatusPageDotNet.Models
         public string AppName { get; set; }
         public string AppLogoUrl { get; set; }
 
-        public bool IsOkOverall => Apis.All(site => site.IsHealthy()) &&
-                                   Sites.All(site => site.IsHealthy()) &&
-                                   KPIs.All(site => site.IsHealthy()) &&
-                                   ThirdPartyServices.All(site => site.IsHealthy()) &&
-                                   DBs.All(db => db.IsHealthy());
+        public bool IsOkOverall => Apis.All(site => !site.IsUnhealthy()) &&
+                                   Sites.All(site => !site.IsUnhealthy()) &&
+                                   KPIs.All(site => !site.IsUnhealthy()) &&
+                                   ThirdPartyServices.All(site => !site.IsUnhealthy()) &&
+                                   DBs.All(db => !db.IsUnhealthy());
 
         public string OverallStatus => IsOkOverall
                                            ? "All systems operational!"
