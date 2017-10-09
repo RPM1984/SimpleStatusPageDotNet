@@ -31,6 +31,7 @@ namespace SimpleStatusPageDotNet.Models
                                                          site => new HttpClient
                                                          {
                                                              BaseAddress = site.BaseAddress,
+                                                             Timeout = TimeSpan.FromSeconds(5),
                                                              DefaultRequestHeaders =
                                                              {
                                                                  {UserAgentHeaderName, UserAgentHeaderValue}
@@ -39,7 +40,8 @@ namespace SimpleStatusPageDotNet.Models
             _apis = appOptions.Value.Apis.ToDictionary(api => api,
                                                        api => new HttpClient
                                                        {
-                                                           BaseAddress = api.BaseAddress
+                                                           BaseAddress = api.BaseAddress,
+                                                           Timeout = TimeSpan.FromSeconds(5)
                                                        });
 
             _dbs = appOptions.Value.Dbs;
