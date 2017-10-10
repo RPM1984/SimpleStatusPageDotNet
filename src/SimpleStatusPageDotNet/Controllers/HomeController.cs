@@ -29,6 +29,18 @@ namespace SimpleStatusPageDotNet.Controllers
             _healthCheckHelper = healthCheckHelper;
         }
 
+        [Route("db")]
+        public async Task<IActionResult> CheckDbAsync()
+        {
+            _logger.LogTrace(nameof(Index));
+
+            var dbHealths = await _healthCheckHelper.GetDbHealthsAsync()
+                                                    .ConfigureAwait(false);
+            return dbHealths.All(dbHealth => dbHealth.IsHealthy())
+                       ? Ok()
+                       : StatusCode((int) HttpStatusCode.ServiceUnavailable);
+        }
+        
         public async Task<IActionResult> Index()
         {
             _logger.LogTrace(nameof(Index));
