@@ -96,10 +96,12 @@ namespace SimpleStatusPageDotNet.Models
         {
             try
             {
-                var sqlConnection = new SqlConnection(db.ConnectionString);
-                var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                await sqlConnection.OpenAsync(cancellationToken.Token)
-                                   .ConfigureAwait(false);
+                using (var sqlConnection = new SqlConnection(db.ConnectionString))
+                {
+                    var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                    await sqlConnection.OpenAsync(cancellationToken.Token)
+                                       .ConfigureAwait(false);
+                }
                 return new HealthModel
                 {
                     Name = db.Name,
