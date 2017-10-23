@@ -27,22 +27,28 @@ namespace SimpleStatusPageDotNet.Models
         {
             appOptions.ShouldNotBeNull();
 
-            _sites = appOptions.Value.Sites.ToDictionary(site => site,
-                                                         site => new HttpClient
-                                                         {
-                                                             BaseAddress = site.BaseAddress,
-                                                             Timeout = TimeSpan.FromSeconds(5),
-                                                             DefaultRequestHeaders =
+            _sites = appOptions.Value.Sites != null &&
+                     appOptions.Value.Sites.Any()
+                         ? appOptions.Value.Sites.ToDictionary(site => site,
+                                                               site => new HttpClient
+                                                               {
+                                                                   BaseAddress = site.BaseAddress,
+                                                                   Timeout = TimeSpan.FromSeconds(5),
+                                                                   DefaultRequestHeaders =
+                                                                   {
+                                                                       {UserAgentHeaderName, UserAgentHeaderValue}
+                                                                   }
+                                                               })
+                         : new Dictionary<SiteConfig, HttpClient>();
+            _apis = appOptions.Value.Apis != null &&
+                    appOptions.Value.Apis.Any()
+                        ? appOptions.Value.Apis.ToDictionary(api => api,
+                                                             api => new HttpClient
                                                              {
-                                                                 {UserAgentHeaderName, UserAgentHeaderValue}
-                                                             }
-                                                         });
-            _apis = appOptions.Value.Apis.ToDictionary(api => api,
-                                                       api => new HttpClient
-                                                       {
-                                                           BaseAddress = api.BaseAddress,
-                                                           Timeout = TimeSpan.FromSeconds(5)
-                                                       });
+                                                                 BaseAddress = api.BaseAddress,
+                                                                 Timeout = TimeSpan.FromSeconds(5)
+                                                             })
+                        : new Dictionary<ApiConfig, HttpClient>();
 
             _dbs = appOptions.Value.Dbs;
         }
